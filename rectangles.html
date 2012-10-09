@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>SCG Rectangles</title>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
+    <script type="text/javascript" src="../d3/d3.v2.js"></script>
   </head>
   <body>
     <script type="text/javascript">
@@ -41,7 +41,7 @@ d3.timer(function() {
   g.attr("transform", function(d, i) {
     d.center[0] += (mouse[0] - d.center[0]) / (i + 5);
     d.center[1] += (mouse[1] - d.center[1]) / (i + 5);
-    d.angle += Math.sin((count + i) / 2 ) * 7;
+    d.angle += Math.sin((count + i) / 5 ) * 7;
     return "translate(" + d.center + ")rotate(" + d.angle + ")";
   });
 });
