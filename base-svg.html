@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>d3 experiment</title>
+    <script type="text/javascript" src="../jquery/jquery-1.8.2.js"></script>
+    <script type="text/javascript" src="../d3/d3.v2.min.js"></script>
+    <style type="text/css">
+      .box {
+        background-color: skyblue;
+        width: 24px;
+        height: 18px;
+        padding: 4px;
+        margin: 1px;
+      }
+      div.bar {
+                display: inline-block; 
+ 		width: 20px;
+		height: 75px;
+		background-color: teal;
+      }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+	var dataset = [];
+	for (var i=0; i<25; i++){
+		var newNumber = Math.round(Math.random() * 30);
+		dataset = dataset.concat(newNumber);
+	}
+
+        d3.select("body").selectAll("div")
+ 		.data(dataset)
+		.enter()
+		.append("div")
+		.attr("class", "bar")
+		.style("margin-right", "2px")
+   		.style("height", function(d) { 
+ 			var barheight = d * 5;
+			return barheight + "px"; 
+		}); // end height
+
+	var svg_w = 500;
+	var svg_h = 500;
+	var svg = d3.select("body")
+		.append("svg")
+		.attr("width", function(d) { return svg_w; } )
+		.attr("height", function(d) { return svg_h; } );
+
+	var radii = [ 5, 10, 15, 20, 25, 30 ];
+	var circles = svg.selectAll("circle")
+		.data(radii)
+		.enter()
+		.append("circle");
+	circles.attr("cx", function(d, i) {
+		return (i*60) + 25;
+	   })
+		.attr("stroke", "orange")
+		.attr("stroke-width", function(d) { return d/5; })
+		.attr("fill", "yellow")
+		.attr("cy", svg_h/2)
+		.attr("r", function(d) {
+			return d;
+	   });
+	
+ // http://alignedleft.com/tutorials/d3/making-a-bar-chart/
+	var barpadding = 1;
+	var rects = svg.selectAll("rect")
+			.data(dataset)
+			.enter()
+			.append("rect")
+			.attr("x", function(d, i) {
+				return i*(svg_w/dataset.length);
+			})
+			.attr("y", 0)
+			.attr("width", function(d) {
+				return svg_w / dataset.length - barpadding;
+			})
+			.attr("height", function(d) { return d*4; })
+			.attr("fill", function(d) {
+				return "rgb(0, 0, " + (d*10) + ")";
+			});
+	
+	}) // ready
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
+
